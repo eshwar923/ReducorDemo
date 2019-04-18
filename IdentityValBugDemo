@@ -1,0 +1,35 @@
+package com.demo;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.BinaryOperator;
+
+public class IdentityValBugDemo {
+
+    public static void main(String[] args) {
+	bugIfWeDontHavIdentityValue();
+
+    }
+    
+    static void bugIfWeDontHavIdentityValue() {
+   	List<Integer> ints = Arrays.asList(0,1,2,3,4,-1,-2,-3,-4);
+   	List<Integer> ints1 = Arrays.asList(0,1,2,3,4);
+   	List<Integer> ints2 = Arrays.asList(-1,-2,-3,-4);
+   	
+   	BinaryOperator<Integer> op = Integer::max;
+   	
+   	int reduction = MainReducer.reduce(ints, 0, op);
+   	int red1 = MainReducer.reduce(ints1,0,op);
+   	int red2 = MainReducer.reduce(ints2,0,op);
+   	//int reduction = reduce(Arrays.asList(red1,red2), 0,op);
+   	
+   	System.out.println("red2====="+red2);//prints 0 whereas result shall be -1. Bcz, 0 isnt an identity val. Ders no specific Identity val for Max oprtn
+   	System.out.println("reduction:  "+reduction);
+   	
+   	
+   	
+   	
+   	
+       }
+
+}
